@@ -10,7 +10,8 @@ class Map
 public:
 	Map(int carNum);
 	~Map();
-	void step(Journey* journeys);
+	void step(Journey* journeys, int currentStep);
+	void startSim(Journey* journeys, int numSim);
 
 private:
 	vector<Car*> points;

@@ -4,9 +4,12 @@
 
 Car::Car()
 {
-	x = 0;
-	y = 0;
-	isOnJourney = false;
+	this->x = 0;
+	this->y = 0;
+	this->isOnJourney = false;
+	this->currentJourney = -1;
+	this->numOnTime = 0;
+	this->currentStep = 0;
 }
 
 
@@ -14,18 +17,47 @@ Car::~Car()
 {
 }
 
-int Car::getX() {
-	return x;
+void Car::completeJourney() {
+	this->completedJourneys.push_back(this->currentJourney);
+	this->currentJourney = -1;
 }
 
-int Car::getY() {
-	return y;
+void Car::step(Journey* journey, int currentStep) {
+	int destX;
+	int destY;
+	if (!this->isOnJourney) {
+		destX = journeys->startX;
+		destY = journeys->startY;
+		this->x += (destX - this->x);
+		this->y += (destY - this->y);
+		if (this->x == destX) {
+			if (this->y == destY) {
+				this->startJourney(journey);
+			}
+		}
+	}
+	else {
+		destX = journeys->startX;
+		destY = journeys->startY;
+		this->x += (destX - this->x);
+		this->y += (destY - this->y);
+		if (this->x == destX) {
+			if (this->y == destY) {
+				this->completeJourney();
+			}
+		}
+	}
+	this->currentStep = currentStep;
 }
 
-void Car::setX(int newX) {
-	x = newX;
+void Car::startJourney(Journey* journey) {
+	this->currentJourney = journey->current;
+	this->isOnJourney = true;
+	if (this->currentStep <= journey->startTime) {
+		this->numOnTime += 1;
+	}
 }
 
-void Car::setY(int newY) {
-	x = newY;
+int Car::calculateScore(int journeyScore, int bonus) {
+	return journeyScore * completedJourneys.size() + bonus * numOnTime;
 }
