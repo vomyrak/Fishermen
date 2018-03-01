@@ -3,7 +3,7 @@
 //  newFile
 //
 //  Created by The Pog on 01/03/2018.
-//  Copyright © 2018 Pranav Paul. All rights reserved.
+//  Copyright © 2018 Pranav Paul Pogba. All rights reserved.
 //
 
 #include <iostream>
